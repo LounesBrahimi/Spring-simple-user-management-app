@@ -20,15 +20,10 @@ public class UserService {
     }
     
     public User registreUsers(User user) {
-        System.out.println("######### 3  ==>> 1");
     	User savedUser = null;
-    	System.out.println("######### 3  ==>> 2");
         if(user.getId() == null) {
-        	System.out.println("######### 3  ==>> 3");
         	savedUser = userProxy.registreUser(user);
-        	System.out.println("######### 3  ==>> 4");
         }
-        System.out.println("######### 3  ==>> 5");
         return savedUser;
     }
     
