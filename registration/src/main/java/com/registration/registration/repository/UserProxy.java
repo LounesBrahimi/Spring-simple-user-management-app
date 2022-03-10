@@ -43,13 +43,17 @@ public class UserProxy {
 	    
 	    RestTemplate restTemplate = new RestTemplate();
 	    HttpEntity<User> request = new HttpEntity<User>(user);
-	    
+	    System.out.println("######### 3  ==>> 3    ===+>>>> 1");
+	    System.out.println(user.getFirstName());
+	    System.out.println(user.getLastName());
+	    System.out.println(user.getMail());
+	    System.out.println(user.getPassword());
 	    ResponseEntity<User> response = restTemplate.exchange(
 	            createUserUrl,
 	            HttpMethod.POST,
 	            request,
 	            User.class);
-	    
+	    System.out.println("######### 3  ==>> 3    ===+>>>> 2");
 	    return response.getBody();
 	}
 	

@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.registration.registration.model.User;
 import com.registration.registration.service.UserService;
-
+import org.springframework.ui.Model;
 
 
 @Controller
@@ -49,11 +49,13 @@ public class UserController {
 	
 	@PostMapping("/saveUser")
 	public ModelAndView saveEmployee(@ModelAttribute User user) {
-		if(user.getId() != null) {
+		System.out.println("######## 1");
+		if(user.getId() != null) {System.out.println("######## 2");
 			User current = service.getUser(user.getId());
 			user.setPassword(current.getPassword());
-		}
+		}System.out.println("######## 3");
 		service.registreUsers(user);
+		System.out.println("######## 4");
 		return new ModelAndView("redirect:/");	
 	}
 }
