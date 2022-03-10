@@ -1,5 +1,7 @@
 package com.registration.registration.repository;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -12,7 +14,7 @@ import com.registration.registration.CustomProperties;
 import com.registration.registration.model.User;
 
 import lombok.extern.slf4j.Slf4j;
-
+import com.registration.registration.model.Model;
 @Slf4j
 @Component
 public class UserProxy {
@@ -25,13 +27,12 @@ public class UserProxy {
         String getUsersUrl = baseApiUrl + "/users";
         
         RestTemplate restTemplate = new RestTemplate();
-        
         ResponseEntity<Iterable<User>> response = restTemplate.exchange(
-                getUsersUrl,
-                HttpMethod.GET,
-                null,
-                new ParameterizedTypeReference<Iterable<User>>() {}
-                );
+        		getUsersUrl, 
+				HttpMethod.GET, 
+				null,
+				new ParameterizedTypeReference<Iterable<User>>() {}
+			);
         
         return response.getBody();
 	}
@@ -50,5 +51,47 @@ public class UserProxy {
 	            User.class);
 	    
 	    return response.getBody();
+	}
+	
+	public User getUser(Long long1) {
+		String baseApiUrl = props.getApiUrl();
+		String getUserUrl = baseApiUrl + "/user/" + long1;
+
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<User> response = restTemplate.exchange(
+				getUserUrl, 
+				HttpMethod.GET, 
+				null,
+				User.class
+			);
+		
+		return response.getBody();
+	}
+	
+	public User updateUser(User user) {
+		String baseApiUrl = props.getApiUrl();
+		String updateUserUrl = baseApiUrl + "/user/" + user.getId();
+
+		RestTemplate restTemplate = new RestTemplate();
+		HttpEntity<User> request = new HttpEntity<User>(user);
+		ResponseEntity<User> response = restTemplate.exchange(
+				updateUserUrl, 
+				HttpMethod.PUT, 
+				request, 
+				User.class);
+		
+		return response.getBody();
+	}
+	
+	public void deleteUser(int id) {
+		String baseApiUrl = props.getApiUrl();
+		String deleteUserUrl = baseApiUrl + "/user/" + id;
+		
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<Void> response = restTemplate.exchange(
+				deleteUserUrl, 
+				HttpMethod.DELETE, 
+				null, 
+				Void.class);
 	}
 }
